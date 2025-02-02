@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <Version>9.0.0</Version>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>Aiursoft.GptClient.Abstractions</AssemblyName>
+    <RootNamespace>Aiursoft.GptClient.Abstractions</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>GptClient</Product>
+    <Authors>anduin</Authors>
+    <Description>Automatic dependencies management system which powers Aiursoft</Description>
+    <PackageId>Aiursoft.GptClient.Abstractions</PackageId>
+    <PackageTags>dependencies injection gptClient</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/gptClient</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/gptClient</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="." />
+  </ItemGroup>
+</Project>
