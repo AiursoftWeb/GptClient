@@ -43,10 +43,11 @@ public class ChatClient
     public virtual async Task<CompletionData> AskModel(OpenAiModel model, GptModel gptModelType)
     {
         model.Model = ToModelString(gptModelType);
-        _logger.LogInformation("Asking OpenAi with model: {Model}.", model.Model);
+        _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
+            model.Model,
+            _completionApiUrl);
 
         var json = JsonSerializer.Serialize(model);
-        _logger.LogInformation("Asking OpenAi with endpoint: {Endpoint}.", _completionApiUrl);
         var request = new HttpRequestMessage(HttpMethod.Post, _completionApiUrl)
         {
             Content = new StringContent(json, Encoding.UTF8, "application/json")

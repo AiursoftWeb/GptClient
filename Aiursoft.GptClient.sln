@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FF17F32E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aiursoft.GptClient.Tests", "tests\Aiursoft.GptClient.Tests\Aiursoft.GptClient.Tests.csproj", "{16331FDD-E34E-4F61-93DA-93713E3DB4FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aiursoft.GptClient.ChatConsole", "src\Aiursoft.GptClient.ChatConsole\Aiursoft.GptClient.ChatConsole.csproj", "{665E43FF-F7B7-4A01-BA64-53627D3473D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{16331FDD-E34E-4F61-93DA-93713E3DB4FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16331FDD-E34E-4F61-93DA-93713E3DB4FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16331FDD-E34E-4F61-93DA-93713E3DB4FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665E43FF-F7B7-4A01-BA64-53627D3473D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665E43FF-F7B7-4A01-BA64-53627D3473D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665E43FF-F7B7-4A01-BA64-53627D3473D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665E43FF-F7B7-4A01-BA64-53627D3473D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{EFD7AC5B-06B9-484A-8003-988295F95939} = {FED8880C-E518-4019-93F9-24016B44C129}
 		{FC7DE990-CE4A-4494-95FB-A52862897772} = {FED8880C-E518-4019-93F9-24016B44C129}
 		{16331FDD-E34E-4F61-93DA-93713E3DB4FA} = {FF17F32E-9C05-43B5-80F0-2816B23809F4}
+		{665E43FF-F7B7-4A01-BA64-53627D3473D2} = {FED8880C-E518-4019-93F9-24016B44C129}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {513A31DD-B787-4011-981B-7D58182471F1}

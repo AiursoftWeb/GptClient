@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <Version>9.0.2</Version>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>chat-console</AssemblyName>
+    <RootNamespace>Aiursoft.GptClient.ChatConsole</RootNamespace>
+    <IsTestProject>false</IsTestProject>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IsPackable>true</IsPackable>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>chat-console</ToolCommandName>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Company>Aiursoft</Company>
+    <Product>Static</Product>
+    <Authors>anduin</Authors>
+    <Description>Aiursoft.GptClient.ChatConsole is a simple chat console client, as a global tool.</Description>
+    <PackageId>Aiursoft.GptClient.ChatConsole</PackageId>
+    <PackageTags>cli nuget dotnet csproj http static</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/gptclient</PackageProjectUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/gptclient</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="." />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Aiursoft.GptClient\Aiursoft.GptClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>

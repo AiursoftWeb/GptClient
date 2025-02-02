@@ -6,25 +6,90 @@
 [![NuGet version (Aiursoft.GptClient)](https://img.shields.io/nuget/v/Aiursoft.GptClient.svg)](https://www.nuget.org/packages/Aiursoft.GptClient/)
 [![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.cn/aiursoft/GptClient.svg)](https://gitlab.aiursoft.cn/aiursoft/GptClient/-/commits/master?ref_type=heads)
 
-An Automatic dependencies management system for ASP.NET Core and powers Aiursoft.
+The SDK for ChatGpt. Simple implementation and easy to use.
 
-## Why this project
+## How to use Aiursoft.GptClient.ChatConsole as a CLI
 
-The traditional way to add dependencies is:
+Before starting, it's suggested to install ollama first for local testing.
 
-```csharp
-service.AddScoped<MyScopedDependency>();
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-Which means that you have to manually inject all dependencies. When you have too many of them, it is possible to make a mistake.
+This project uses `deepseek-r1:32b` as the default model. Pull it first.
 
-## How to use Aiursoft.GptClient
+```bash
+ollama pull deepseek-r1:32b
+```
+
+To use `Aiursoft.GptClient.ChatConsole` as a CLI, you can install it as a global tool:
+
+```bash
+dotnet tool install --global Aiursoft.GptClient.ChatConsole
+```
+
+Then you can use the tool like this:
+
+```bash
+chat-console
+```
+
+That's it! You can now chat with GPT in your terminal.
+
+## How to use Aiursoft.GptClient as a Library
 
 First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 
 ```bash
 dotnet add package Aiursoft.GptClient
 ```
+
+Then you can use the client like this:
+
+```csharp
+var inMemorySettings = new Dictionary<string, string>
+{
+    { "OpenAI:Token", apiKey },
+    { "OpenAI:CompletionApiUrl", endpoint }
+};
+var configuration = new ConfigurationBuilder()
+    .AddInMemoryCollection(inMemorySettings!)
+    .Build();
+
+var services = new ServiceCollection();
+services.AddSingleton<IConfiguration>(configuration);
+services.AddHttpClient();
+services.AddLogging(logging =>
+{
+    logging.SetMinimumLevel(LogLevel.Warning);
+});
+services.AddGptClient();
+var serviceProvider = services.BuildServiceProvider();
+var chatClient = serviceProvider.GetRequiredService<ChatClient>();
+
+var history = new OpenAiModel();
+while (true)
+{
+    var nextQuestion = AskUser("USER:", null);
+    history.Messages.Add(new MessagesItem
+    {
+        Role = "user",
+        Content = nextQuestion
+    });
+
+    var result = await chatClient.AskModel(history, model);
+    Console.WriteLine("AI:");
+    Console.WriteLine(result.GetAnswerPart());
+    
+    history.Messages.Add(new MessagesItem
+    {
+        Role = "assistant",
+        Content = result.GetAnswerPart()
+    });
+}
+```
+
+Now you have built a simple ChatGpt client.
 
 ## How to contribute
 
