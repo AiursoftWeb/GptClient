@@ -88,7 +88,7 @@ public class ChatClient
         }
     }
     
-    public async Task<CompletionData> AskString(GptModel gptModelType, params string[] content)
+    public virtual async Task<CompletionData> AskString(GptModel gptModelType, params string[] content)
     {
         var model = new OpenAiModel
         {
