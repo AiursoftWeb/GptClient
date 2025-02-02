@@ -26,84 +26,10 @@ First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 dotnet add package Aiursoft.GptClient
 ```
 
-Add the interface to your class like this:
+## How to contribute
 
-```csharp
-using Aiursoft.GptClient.Abstractions;
+There are many ways to contribute to the project: logging bugs, submitting pull requests, reporting issues, and creating suggestions.
 
-public class MySingletonService : ISingletonDependency
-{
+Even if you with push rights on the repository, you should create a personal fork and create feature branches there when you need them. This keeps the main repository clean and your workflow cruft out of sight.
 
-}
-
-public class MyScopedService : IScopedDependency
-{
-
-}
-
-public class MyTransientService : ITransientDependency
-{
-
-}
-```
-
-And just call this in your `StartUp.cs`:
-
-```csharp
-using Aiursoft.GptClient;
-
-services.AddScannedDependencies();
-```
-
-That's all! All your dependencies are registered. Just use it like previous before:
-
-```csharp
-public class MyController : Controller
-{
-    private readonly MyScopedService _service;
-    public MyController(MyScopedService service)
-    {
-        _service = service;
-    }
-}
-```
-
-### Advanced usage
-
-When you want to register a dependency that implements an abstract, your previous way is:
-
-```csharp
-public class MyClass : IAbstract
-{
-
-}
-```
-
-```csharp
-service.AddScoped<IAbstract, MyClass>();
-```
-
-That's fine. But now we want to register this automatically.
-
-Add the dependency interface to your service like this:
-
-```csharp
-public class MyClass : IAbstract, IScopedDependency
-{
-
-}
-```
-
-When you are registering all dependencies in your `StartUp.cs`, tell us that your project supports your abstract.
-
-```csharp
-services.AddScannedDependencies(typeof(IAbstract));
-```
-
-And you can call it with multiple abstracts:
-
-```csharp
-services.AddScannedDependencies(typeof(IAbstract1), typeof(IAbstract2), typeof(IAbstract3));
-```
-
-That's all! Enjoy!
+We're also interested in your feedback on the future of this project. You can submit a suggestion or feature request through the issue tracker. To make this process more effective, we're asking that these include more information to help define them more clearly.
