@@ -45,7 +45,23 @@ First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 dotnet add package Aiursoft.GptClient
 ```
 
-Then you can use the client like this:
+Exposed API in `ChatClient`:
+
+```csharp
+public Task<CompletionData> AskModel(OpenAiModel model, GptModel gptModelType);
+public Task<CompletionData> AskString(GptModel gptModelType, params string[] content);
+```
+
+Required IConfiguration keys:
+
+```json
+{
+    "OpenAI:Token": "YourOpenAIKey",
+    "OpenAI:CompletionApiUrl": "https://api.openai.com/v1/engines/davinci/completions"
+}
+```
+
+For example, you can use the following code to create a simple ChatGpt client:
 
 ```csharp
 var inMemorySettings = new Dictionary<string, string>
@@ -53,6 +69,7 @@ var inMemorySettings = new Dictionary<string, string>
     { "OpenAI:Token", apiKey },
     { "OpenAI:CompletionApiUrl", endpoint }
 };
+var model = GptModel.DeepseekR132B;
 var configuration = new ConfigurationBuilder()
     .AddInMemoryCollection(inMemorySettings!)
     .Build();
