@@ -20,6 +20,6 @@
     <PackageReference Include="MSTest.TestFramework" Version="3.7.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\GptClient\Aiursoft.GptClient.csproj" />
+    <ProjectReference Include="..\..\src\Aiursoft.GptClient\Aiursoft.GptClient.csproj" />
   </ItemGroup>
 </Project>

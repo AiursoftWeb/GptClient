@@ -30,6 +30,6 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GptClient.Abstractions\Aiursoft.GptClient.Abstractions.csproj" />
+    <ProjectReference Include="..\Aiursoft.GptClient.Abstractions\Aiursoft.GptClient.Abstractions.csproj" />
   </ItemGroup>
 </Project>
