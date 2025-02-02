@@ -4,6 +4,7 @@
 [![Pipeline stat](https://gitlab.aiursoft.cn/aiursoft/gptClient/badges/master/pipeline.svg)](https://gitlab.aiursoft.cn/aiursoft/gptClient/-/pipelines)
 [![Test Coverage](https://gitlab.aiursoft.cn/aiursoft/gptClient/badges/master/coverage.svg)](https://gitlab.aiursoft.cn/aiursoft/gptClient/-/pipelines)
 [![NuGet version (Aiursoft.GptClient)](https://img.shields.io/nuget/v/Aiursoft.GptClient.svg)](https://www.nuget.org/packages/Aiursoft.GptClient/)
+[![NuGet version (Aiursoft.GptClient.ChatConsole)](https://img.shields.io/nuget/v/Aiursoft.GptClient.ChatConsole.svg)](https://www.nuget.org/packages/Aiursoft.GptClient.ChatConsole/)
 [![ManHours](https://manhours.aiursoft.cn/r/gitlab.aiursoft.cn/aiursoft/GptClient.svg)](https://gitlab.aiursoft.cn/aiursoft/GptClient/-/commits/master?ref_type=heads)
 
 The SDK for ChatGpt. Simple implementation and easy to use.
