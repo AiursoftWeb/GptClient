@@ -17,10 +17,10 @@ Before starting, it's suggested to install ollama first for local testing.
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
-This project uses `deepseek-r1:32b` as the default model. Pull it first.
+This project uses `deepseek-r1:70b` as the default model. Pull it first.
 
 ```bash
-ollama pull deepseek-r1:32b
+ollama pull deepseek-r1:70b
 ```
 
 To use `Aiursoft.GptClient.ChatConsole` as a CLI, you can install it as a global tool:
@@ -69,7 +69,7 @@ var inMemorySettings = new Dictionary<string, string>
     { "OpenAI:Token", apiKey },
     { "OpenAI:CompletionApiUrl", endpoint }
 };
-var model = GptModel.DeepseekR132B;
+var model = GptModel.DeepseekR170B;
 var configuration = new ConfigurationBuilder()
     .AddInMemoryCollection(inMemorySettings!)
     .Build();

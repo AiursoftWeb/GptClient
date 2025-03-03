@@ -28,5 +28,7 @@ public enum GptModel
     /// <summary>
     /// deepseek-r1	model.
     /// </summary>
-    DeepseekR132B
+    DeepseekR132B,
+    DeepseekR170B,
+    DeepseekR1671B,
 }

@@ -36,6 +36,8 @@ public class ChatClient
             GptModel.Gpt4 => "gpt-4",
             GptModel.Gpt432K => "gpt-4-32k",
             GptModel.DeepseekR132B => "deepseek-r1:32b",
+            GptModel.DeepseekR170B => "deepseek-r1:70b",
+            GptModel.DeepseekR1671B => "deepseek-r1:671b",
             _ => throw new ArgumentOutOfRangeException(nameof(gptModel), gptModel, null)
         };
     }

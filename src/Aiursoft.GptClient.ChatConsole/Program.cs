@@ -47,7 +47,7 @@ public abstract class Program
             "http://127.0.0.1:11434/api/chat"
         );
         var apiKey = AskUser("Please enter the API key:", null, allowEmpty: true);
-        var modelName = AskUser("Please enter the model name:", "DeepseekR132B");
+        var modelName = AskUser("Please enter the model name:", "DeepseekR170B");
         var model = Enum.Parse<GptModel>(modelName);
         
         var inMemorySettings = new Dictionary<string, string>
