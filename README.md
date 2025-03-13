@@ -9,35 +9,7 @@
 
 The SDK for ChatGpt. Simple implementation and easy to use.
 
-## How to use Aiursoft.GptClient.ChatConsole as a CLI
-
-Before starting, it's suggested to install ollama first for local testing.
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-This project uses `deepseek-r1:70b` as the default model. Pull it first.
-
-```bash
-ollama pull deepseek-r1:70b
-```
-
-To use `Aiursoft.GptClient.ChatConsole` as a CLI, you can install it as a global tool:
-
-```bash
-dotnet tool install --global Aiursoft.GptClient.ChatConsole
-```
-
-Then you can use the tool like this:
-
-```bash
-chat-console
-```
-
-That's it! You can now chat with GPT in your terminal.
-
-## How to use Aiursoft.GptClient as a Library
+## How to install
 
 First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 
