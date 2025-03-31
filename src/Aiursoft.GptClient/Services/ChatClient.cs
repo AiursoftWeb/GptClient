@@ -23,7 +23,7 @@ public class ChatClient
 
     public virtual Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token)
     {
-        _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
+        _logger.LogInformation("Asking LLM with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
             completionApiUrl);
 
@@ -59,7 +59,7 @@ public class ChatClient
             var responseModel = JsonSerializer.Deserialize<CompletionDataInternal>(responseJson);
             responseModel!.FillChoices();
 
-            _logger.LogInformation("Asked OpenAi. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
+            _logger.LogInformation("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
                 responseModel.GetAnswerPart().SafeSubstring(70),
                 stopwatch.ElapsedMilliseconds);
@@ -69,7 +69,7 @@ public class ChatClient
         {
             var remoteError = await response.Content.ReadAsStringAsync();
 
-            _logger.LogError("Asked OpenAi failed. Request last question: {0}. Response last answer: {1}.",
+            _logger.LogError("Ask LLM failed. Request last question: {0}. Response last answer: {1}.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
                 remoteError.SafeSubstring(70));
             throw new HttpRequestException(remoteError, raw);
