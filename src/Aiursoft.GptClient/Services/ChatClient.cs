@@ -26,25 +26,9 @@ public class ChatClient
         _token = configuration["OpenAI:Token"]!;
         _completionApiUrl = configuration["OpenAI:CompletionApiUrl"]!;
     }
-    
-    public string ToModelString(GptModel gptModel)
-    {
-        return gptModel switch
-        {
-            GptModel.Gpt35Turbo => "gpt-3.5-turbo",
-            GptModel.Gpt35Turbo16K => "gpt-3.5-turbo-16k",
-            GptModel.Gpt4 => "gpt-4",
-            GptModel.Gpt432K => "gpt-4-32k",
-            GptModel.DeepseekR132B => "deepseek-r1:32b",
-            GptModel.DeepseekR170B => "deepseek-r1:70b",
-            GptModel.DeepseekR1671B => "deepseek-r1:671b",
-            _ => throw new ArgumentOutOfRangeException(nameof(gptModel), gptModel, null)
-        };
-    }
 
-    public virtual async Task<CompletionData> AskModel(OpenAiModel model, GptModel gptModelType)
+    public virtual async Task<CompletionData> AskModel(OpenAiModel model)
     {
-        model.Model = ToModelString(gptModelType);
         _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
             _completionApiUrl);
@@ -59,7 +43,7 @@ public class ChatClient
         {
             request.Headers.Add("Authorization", $"Bearer {_token}");
         }
-        
+
         var stopwatch = new Stopwatch();
         stopwatch.Start();
         var response = await _httpClient.SendAsync(request);
@@ -68,7 +52,7 @@ public class ChatClient
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadAsStringAsync();
             var responseModel = JsonSerializer.Deserialize<CompletionData>(responseJson);
-            
+
             _logger.LogInformation("Asked OpenAi. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
                 responseModel?.GetAnswerPart().SafeSubstring(70),
@@ -78,7 +62,7 @@ public class ChatClient
         catch (HttpRequestException raw)
         {
             var remoteError = await response.Content.ReadAsStringAsync();
-            
+
             _logger.LogError("Asked OpenAi failed. Request last question: {0}. Response last answer: {1}.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
                 remoteError.SafeSubstring(70));
@@ -89,17 +73,18 @@ public class ChatClient
             stopwatch.Stop();
         }
     }
-    
-    public virtual async Task<CompletionData> AskString(GptModel gptModelType, params string[] content)
+
+    public virtual async Task<CompletionData> AskString(string modelType, params string[] content)
     {
         var model = new OpenAiModel
         {
+            Model = modelType,
             Messages = content.Select(x => new MessagesItem
             {
                 Content = x,
                 Role = "user"
             }).ToList()
         };
-        return await AskModel(model, gptModelType);
+        return await AskModel(model);
     }
 }

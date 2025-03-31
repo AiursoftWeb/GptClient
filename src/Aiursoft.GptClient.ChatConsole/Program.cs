@@ -38,18 +38,17 @@ public abstract class Program
         var endpoint = AskUser(
             """
             Please enter the chat API endpoint:
-            
+
              * For ChatGPT, use https://api.openai.com/v1/chat/completions
              * For Ollma, use http://127.0.0.1:11434/api/chat
              * For other services, please enter the correct endpoint.
-             
-            """, 
+
+            """,
             "http://127.0.0.1:11434/api/chat"
         );
         var apiKey = AskUser("Please enter the API key:", null, allowEmpty: true);
         var modelName = AskUser("Please enter the model name:", "DeepseekR170B");
-        var model = Enum.Parse<GptModel>(modelName);
-        
+
         var inMemorySettings = new Dictionary<string, string>
         {
             { "OpenAI:Token", apiKey },
@@ -70,7 +69,10 @@ public abstract class Program
         var serviceProvider = services.BuildServiceProvider();
         var chatClient = serviceProvider.GetRequiredService<ChatClient>();
 
-        var history = new OpenAiModel();
+        var history = new OpenAiModel
+        {
+            Model = modelName
+        };
         while (true)
         {
             var nextQuestion = AskUser("USER:", null);
@@ -80,17 +82,17 @@ public abstract class Program
                 Content = nextQuestion
             });
 
-            var result = await chatClient.AskModel(history, model);
+            var result = await chatClient.AskModel(history);
             Console.WriteLine("AI:");
             Console.WriteLine(result.GetAnswerPart());
-            
+
             history.Messages.Add(new MessagesItem
             {
                 Role = "assistant",
                 Content = result.GetAnswerPart()
             });
         }
-        
+
         // ReSharper disable once FunctionNeverReturns
     }
 }

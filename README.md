@@ -20,8 +20,8 @@ dotnet add package Aiursoft.GptClient
 Exposed API in `ChatClient`:
 
 ```csharp
-public Task<CompletionData> AskModel(OpenAiModel model, GptModel gptModelType);
-public Task<CompletionData> AskString(GptModel gptModelType, params string[] content);
+public Task<CompletionData> AskModel(OpenAiModel model);
+public Task<CompletionData> AskString(string gptModelType, params string[] content);
 ```
 
 Required IConfiguration keys:
@@ -57,7 +57,10 @@ services.AddGptClient();
 var serviceProvider = services.BuildServiceProvider();
 var chatClient = serviceProvider.GetRequiredService<ChatClient>();
 
-var history = new OpenAiModel();
+var history = new OpenAiModel
+{
+    Model = modelName
+};
 while (true)
 {
     var nextQuestion = AskUser("USER:", null);
@@ -67,7 +70,7 @@ while (true)
         Content = nextQuestion
     });
 
-    var result = await chatClient.AskModel(history, model);
+    var result = await chatClient.AskModel(history);
     Console.WriteLine("AI:");
     Console.WriteLine(result.GetAnswerPart());
     

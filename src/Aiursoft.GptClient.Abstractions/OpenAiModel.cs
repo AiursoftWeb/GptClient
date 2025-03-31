@@ -8,11 +8,6 @@ public class OpenAiModel
 
     [JsonPropertyName("stream")] public bool? Stream { get; set; } = false;
 
-    /// <summary>
-    /// This model is not used in the current implementation.
-    ///
-    /// Keep here for some API projects might need JSON deserialization to correctly deserialize the input.
-    /// </summary>
     [JsonPropertyName("model")] public string? Model { get; set; } = string.Empty;
 
     [JsonPropertyName("temperature")] public double? Temperature { get; set; } = 0.5;
