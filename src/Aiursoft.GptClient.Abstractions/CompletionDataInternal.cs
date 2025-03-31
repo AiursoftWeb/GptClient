@@ -44,13 +44,25 @@ public class CompletionData
     // ReSharper disable once CollectionNeverQueried.Global
     public List<ChoicesItemData>? Choices { get; set; } = [];
 
-    /// <summary>
-    /// For some API versions, the message is returned directly in the completion object.
-    ///
-    /// For library users: Do NOT access neither Choices nor Message directly. Use GetContent() and SetContent() instead.
-    /// </summary>
-    [JsonPropertyName("message")]
-    public MessageData? Message { get; set; }
+    public string GetFullContent()
+    {
+        return Choices!.First().Message?.Content ?? string.Empty;
+    }
+
+    public void SetContent(string content)
+    {
+        Choices =
+        [
+            new ChoicesItemData
+            {
+                Message = new MessageData
+                {
+                    Content = content,
+                    Role = "assistant"
+                }
+            }
+        ];
+    }
 
     public string GetThinkPart()
     {
@@ -90,20 +102,21 @@ public class CompletionData
         // If no think tag found, return the whole content as is
         return content;
     }
+}
 
-    public void FillBothChoices()
+public class CompletionDataInternal : CompletionData
+{
+    /// <summary>
+    /// For some API versions, the message is returned directly in the completion object.
+    ///
+    /// For library users: Do NOT access neither Choices nor Message directly. Use GetContent() and SetContent() instead.
+    /// </summary>
+    [JsonPropertyName("message")]
+    public MessageData? Message { get; set; }
+
+    public void FillChoices()
     {
-        // if message.content is null while choices[0].message.content is not null, fill message.content with choices[0].message.content
-        // if choices[0].message.content is null while message.content is not null, fill choices[0].message.content with message.content
-        if (Message?.Content == null && Choices != null && Choices.Count != 0 && Choices.First().Message?.Content != null)
-        {
-            Message ??= new MessageData
-            {
-                Role = "assistant",
-            };
-            Message.Content = Choices.First().Message!.Content;
-        }
-        else if ((Choices == null || Choices.Count == 0 || Choices.First().Message?.Content == null) && Message?.Content != null)
+        if ((Choices == null || Choices.Count == 0 || Choices.First().Message?.Content == null) && Message?.Content != null)
         {
             Choices ??=
             [
@@ -117,37 +130,5 @@ public class CompletionData
                 }
             ];
         }
-    }
-
-    public string GetFullContent()
-    {
-        if (Choices != null && Choices.Count != 0)
-        {
-            return Choices.First().Message?.Content ?? string.Empty;
-        }
-        return Message?.Content ?? string.Empty;
-    }
-
-    public void SetContent(string content)
-    {
-        // Fill the Choices because some front-end code may rely on it.
-        Choices =
-        [
-            new ChoicesItemData
-            {
-                Message = new MessageData
-                {
-                    Content = content,
-                    Role = "assistant"
-                }
-            }
-        ];
-
-        // Fill the Message because some front-end code may rely on it.
-        Message ??= new MessageData
-        {
-            Role = "assistant",
-        };
-        Message.Content = content;
     }
 }

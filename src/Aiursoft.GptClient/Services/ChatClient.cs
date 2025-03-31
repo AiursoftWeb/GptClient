@@ -56,8 +56,8 @@ public class ChatClient
         {
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadAsStringAsync();
-            var responseModel = JsonSerializer.Deserialize<CompletionData>(responseJson);
-            responseModel!.FillBothChoices();
+            var responseModel = JsonSerializer.Deserialize<CompletionDataInternal>(responseJson);
+            responseModel!.FillChoices();
 
             _logger.LogInformation("Asked OpenAi. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
