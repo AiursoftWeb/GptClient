@@ -21,7 +21,7 @@ public class ChatClient
         _logger = logger;
     }
 
-    public virtual async Task<CompletionData> AskModel(OpenAiModel model, string completionApiUrl, string? token)
+    public virtual async Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token)
     {
         _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
@@ -38,9 +38,20 @@ public class ChatClient
             request.Headers.Add("Authorization", $"Bearer {token}");
         }
 
+        var response = await _httpClient.SendAsync(request);
+        return response;
+    }
+
+    public virtual async Task<CompletionData> AskModel(OpenAiModel model, string completionApiUrl, string? token)
+    {
+        if (model.Stream == true)
+        {
+            throw new InvalidOperationException($"Stream is not supported in this method. Please use the {nameof(AskStream)} method.");
+        }
+
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var response = await _httpClient.SendAsync(request);
+        var response = await AskStream(model, completionApiUrl, token);
         try
         {
             response.EnsureSuccessStatusCode();
