@@ -42,7 +42,7 @@ public class CompletionData
     [JsonPropertyName("choices")]
     // ReSharper disable once CollectionNeverUpdated.Global
     // ReSharper disable once CollectionNeverQueried.Global
-    public List<ChoicesItemData>? Choices { get; set; } = new();
+    public List<ChoicesItemData>? Choices { get; set; } = [];
     
     /// <summary>
     /// For some API versions, the message is returned directly in the completion object.

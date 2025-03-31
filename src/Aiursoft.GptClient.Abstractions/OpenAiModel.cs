@@ -4,7 +4,7 @@ namespace Aiursoft.GptClient.Abstractions;
 
 public class OpenAiModel
 {
-    [JsonPropertyName("messages")] public List<MessagesItem> Messages { get; set; } = new();
+    [JsonPropertyName("messages")] public List<MessagesItem> Messages { get; set; } = [];
 
     [JsonPropertyName("stream")] public bool? Stream { get; set; } = false;
 
@@ -13,7 +13,7 @@ public class OpenAiModel
     ///
     /// Keep here for some API projects might need JSON deserialization to correctly deserialize the input.
     /// </summary>
-    [JsonPropertyName("model")] public string? Model { get; set; } = "gpt-4-0613";
+    [JsonPropertyName("model")] public string? Model { get; set; } = string.Empty;
 
     [JsonPropertyName("temperature")] public double? Temperature { get; set; } = 0.5;
 
