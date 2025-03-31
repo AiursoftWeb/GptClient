@@ -43,7 +43,7 @@ public class CompletionData
     // ReSharper disable once CollectionNeverUpdated.Global
     // ReSharper disable once CollectionNeverQueried.Global
     public List<ChoicesItemData>? Choices { get; set; } = [];
-    
+
     /// <summary>
     /// For some API versions, the message is returned directly in the completion object.
     ///
@@ -59,7 +59,7 @@ public class CompletionData
         const string endTag = "</think>";
         var startIdx = content.IndexOf(startTag, StringComparison.OrdinalIgnoreCase);
         var endIdx = content.IndexOf(endTag, StringComparison.OrdinalIgnoreCase);
-    
+
         // Found think part, return the content between <think> and </think>
         if (startIdx != -1 && endIdx != -1 && endIdx > startIdx)
         {
@@ -67,7 +67,7 @@ public class CompletionData
             var thinkPart = content.Substring(thinkStart, endIdx - thinkStart);
             return thinkPart.Trim();
         }
-    
+
         // Return empty string if no think part found
         return string.Empty;
     }
@@ -79,18 +79,46 @@ public class CompletionData
         const string endTag = "</think>";
         var startIdx = content.IndexOf(startTag, StringComparison.OrdinalIgnoreCase);
         var endIdx = content.IndexOf(endTag, StringComparison.OrdinalIgnoreCase);
-    
+
         // If think part exists, the actual answer is the content after the think tag
         if (startIdx != -1 && endIdx != -1 && endIdx > startIdx)
         {
             var answerStart = endIdx + endTag.Length;
             return content.Substring(answerStart).Trim();
         }
-    
+
         // If no think tag found, return the whole content as is
         return content;
     }
-    
+
+    public void FillBothChoices()
+    {
+        // if message.content is null while choices[0].message.content is not null, fill message.content with choices[0].message.content
+        // if choices[0].message.content is null while message.content is not null, fill choices[0].message.content with message.content
+        if (Message?.Content == null && Choices != null && Choices.Count != 0 && Choices.First().Message?.Content != null)
+        {
+            Message ??= new MessageData
+            {
+                Role = "assistant",
+            };
+            Message.Content = Choices.First().Message!.Content;
+        }
+        else if ((Choices == null || Choices.Count == 0 || Choices.First().Message?.Content == null) && Message?.Content != null)
+        {
+            Choices ??=
+            [
+                new ChoicesItemData()
+                {
+                    Message = new MessageData
+                    {
+                        Content = Message.Content,
+                        Role = "assistant"
+                    }
+                }
+            ];
+        }
+    }
+
     public string GetFullContent()
     {
         if (Choices != null && Choices.Count != 0)
@@ -99,7 +127,7 @@ public class CompletionData
         }
         return Message?.Content ?? string.Empty;
     }
-    
+
     public void SetContent(string content)
     {
         // Fill the Choices because some front-end code may rely on it.

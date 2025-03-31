@@ -57,12 +57,13 @@ public class ChatClient
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadAsStringAsync();
             var responseModel = JsonSerializer.Deserialize<CompletionData>(responseJson);
+            responseModel!.FillBothChoices();
 
             _logger.LogInformation("Asked OpenAi. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
-                responseModel?.GetAnswerPart().SafeSubstring(70),
+                responseModel.GetAnswerPart().SafeSubstring(70),
                 stopwatch.ElapsedMilliseconds);
-            return responseModel!;
+            return responseModel;
         }
         catch (HttpRequestException raw)
         {
