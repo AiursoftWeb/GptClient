@@ -3,7 +3,6 @@ using System.Text;
 using System.Text.Json;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.GptClient.Abstractions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Aiursoft.GptClient.Services;
