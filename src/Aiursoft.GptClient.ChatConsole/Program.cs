@@ -1,6 +1,5 @@
 ﻿using Aiursoft.GptClient.Abstractions;
 using Aiursoft.GptClient.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -40,7 +39,7 @@ public abstract class Program
             Please enter the chat API endpoint:
 
              * For ChatGPT, use https://api.openai.com/v1/chat/completions
-             * For Ollma, use http://127.0.0.1:11434/api/chat
+             * For Ollama, use http://127.0.0.1:11434/api/chat
              * For other services, please enter the correct endpoint.
 
             """,
@@ -49,17 +48,7 @@ public abstract class Program
         var apiKey = AskUser("Please enter the API key:", null, allowEmpty: true);
         var modelName = AskUser("Please enter the model name:", "DeepseekR170B");
 
-        var inMemorySettings = new Dictionary<string, string>
-        {
-            { "OpenAI:Token", apiKey },
-            { "OpenAI:CompletionApiUrl", endpoint }
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(inMemorySettings!)
-            .Build();
-
         var services = new ServiceCollection();
-        services.AddSingleton<IConfiguration>(configuration);
         services.AddHttpClient();
         services.AddLogging(logging =>
         {
@@ -82,7 +71,7 @@ public abstract class Program
                 Content = nextQuestion
             });
 
-            var result = await chatClient.AskModel(history);
+            var result = await chatClient.AskModel(history, endpoint, apiKey);
             Console.WriteLine("AI:");
             Console.WriteLine(result.GetAnswerPart());
 

@@ -12,36 +12,31 @@ public class ChatClient
 {
     private readonly HttpClient _httpClient;
     private readonly ILogger _logger;
-    private readonly string? _token;
-    private readonly string _completionApiUrl;
 
     public ChatClient(
         HttpClient httpClient,
-        ILogger<ChatClient> logger,
-        IConfiguration configuration)
+        ILogger<ChatClient> logger)
     {
         _httpClient = httpClient;
         _httpClient.Timeout = TimeSpan.FromMinutes(5);
         _logger = logger;
-        _token = configuration["OpenAI:Token"]!;
-        _completionApiUrl = configuration["OpenAI:CompletionApiUrl"]!;
     }
 
-    public virtual async Task<CompletionData> AskModel(OpenAiModel model)
+    public virtual async Task<CompletionData> AskModel(OpenAiModel model, string completionApiUrl, string? token)
     {
         _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
-            _completionApiUrl);
+            completionApiUrl);
 
         var json = JsonSerializer.Serialize(model);
-        var request = new HttpRequestMessage(HttpMethod.Post, _completionApiUrl)
+        var request = new HttpRequestMessage(HttpMethod.Post, completionApiUrl)
         {
             Content = new StringContent(json, Encoding.UTF8, "application/json")
         };
 
-        if (_token != null)
+        if (token != null)
         {
-            request.Headers.Add("Authorization", $"Bearer {_token}");
+            request.Headers.Add("Authorization", $"Bearer {token}");
         }
 
         var stopwatch = new Stopwatch();
@@ -74,7 +69,7 @@ public class ChatClient
         }
     }
 
-    public virtual async Task<CompletionData> AskString(string modelType, params string[] content)
+    public virtual async Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, params string[] content)
     {
         var model = new OpenAiModel
         {
@@ -85,6 +80,6 @@ public class ChatClient
                 Role = "user"
             }).ToList()
         };
-        return await AskModel(model);
+        return await AskModel(model, completionApiUrl, token);
     }
 }

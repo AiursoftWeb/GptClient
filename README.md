@@ -36,18 +36,8 @@ Required IConfiguration keys:
 For example, you can use the following code to create a simple ChatGpt client:
 
 ```csharp
-var inMemorySettings = new Dictionary<string, string>
-{
-    { "OpenAI:Token", apiKey },
-    { "OpenAI:CompletionApiUrl", endpoint }
-};
 var model = GptModel.DeepseekR170B;
-var configuration = new ConfigurationBuilder()
-    .AddInMemoryCollection(inMemorySettings!)
-    .Build();
-
 var services = new ServiceCollection();
-services.AddSingleton<IConfiguration>(configuration);
 services.AddHttpClient();
 services.AddLogging(logging =>
 {
@@ -70,7 +60,7 @@ while (true)
         Content = nextQuestion
     });
 
-    var result = await chatClient.AskModel(history);
+    var result = await chatClient.AskModel(history, endpoint, apiKey);
     Console.WriteLine("AI:");
     Console.WriteLine(result.GetAnswerPart());
     
