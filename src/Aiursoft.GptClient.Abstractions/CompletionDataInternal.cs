@@ -118,7 +118,7 @@ public class CompletionDataInternal : CompletionData
     {
         if ((Choices == null || Choices.Count == 0 || string.IsNullOrEmpty(Choices.First().Message?.Content)) && Message?.Content != null)
         {
-            Choices ??=
+            Choices =
             [
                 new ChoicesItemData()
                 {
