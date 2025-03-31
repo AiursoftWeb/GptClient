@@ -21,7 +21,7 @@ public class ChatClient
         _logger = logger;
     }
 
-    public virtual async Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token)
+    public virtual Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token)
     {
         _logger.LogInformation("Asking OpenAi with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
@@ -38,7 +38,7 @@ public class ChatClient
             request.Headers.Add("Authorization", $"Bearer {token}");
         }
 
-        var response = await _httpClient.SendAsync(request);
+        var response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
         return response;
     }
 
