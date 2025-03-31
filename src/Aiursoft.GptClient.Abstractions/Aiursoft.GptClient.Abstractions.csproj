@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.19</Version>
+    <Version>9.0.20</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.GptClient.Abstractions</AssemblyName>
     <RootNamespace>Aiursoft.GptClient.Abstractions</RootNamespace>

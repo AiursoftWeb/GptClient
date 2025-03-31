@@ -130,5 +130,10 @@ public class CompletionDataInternal : CompletionData
                 }
             ];
         }
+
+        if (Choices == null || Choices.Count == 0 || string.IsNullOrEmpty(Choices.First().Message?.Content))
+        {
+            throw new InvalidOperationException("Both Choices and Message are empty.");
+        }
     }
 }
