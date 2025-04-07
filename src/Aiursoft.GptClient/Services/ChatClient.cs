@@ -60,8 +60,8 @@ public class ChatClient
             responseModel!.FillChoices();
 
             _logger.LogInformation("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
-                model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
-                responseModel.GetAnswerPart().SafeSubstring(70),
+                model.Messages.LastOrDefault()?.Content?.SafeSubstring(270),
+                responseModel.GetAnswerPart().SafeSubstring(370),
                 stopwatch.ElapsedMilliseconds);
             return responseModel;
         }
@@ -70,8 +70,8 @@ public class ChatClient
             var remoteError = await response.Content.ReadAsStringAsync();
 
             _logger.LogError("Ask LLM failed. Request last question: {0}. Response last answer: {1}.",
-                model.Messages.LastOrDefault()?.Content?.SafeSubstring(70),
-                remoteError.SafeSubstring(70));
+                model.Messages.LastOrDefault()?.Content?.SafeSubstring(270),
+                remoteError.SafeSubstring(370));
             throw new HttpRequestException(remoteError, raw);
         }
         finally
