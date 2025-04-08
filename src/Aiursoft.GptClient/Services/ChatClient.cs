@@ -21,7 +21,7 @@ public class ChatClient
         _logger = logger;
     }
 
-    public virtual Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token)
+    public virtual Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Asking LLM with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
@@ -38,11 +38,11 @@ public class ChatClient
             request.Headers.Add("Authorization", $"Bearer {token}");
         }
 
-        var response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+        var response = _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken);
         return response;
     }
 
-    public virtual async Task<CompletionData> AskModel(OpenAiModel model, string completionApiUrl, string? token)
+    public virtual async Task<CompletionData> AskModel(OpenAiModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
     {
         if (model.Stream == true)
         {
@@ -51,11 +51,11 @@ public class ChatClient
 
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        var response = await AskStream(model, completionApiUrl, token);
+        var response = await AskStream(model, completionApiUrl, token, cancellationToken);
         try
         {
             response.EnsureSuccessStatusCode();
-            var responseJson = await response.Content.ReadAsStringAsync();
+            var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
             var responseModel = JsonSerializer.Deserialize<CompletionDataInternal>(responseJson);
             responseModel!.FillChoices();
 
@@ -67,7 +67,7 @@ public class ChatClient
         }
         catch (HttpRequestException raw)
         {
-            var remoteError = await response.Content.ReadAsStringAsync();
+            var remoteError = await response.Content.ReadAsStringAsync(cancellationToken);
 
             _logger.LogError("Ask LLM failed. Request last question: {0}. Response last answer: {1}.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(2000),
@@ -80,7 +80,7 @@ public class ChatClient
         }
     }
 
-    public virtual async Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, params string[] content)
+    public virtual async Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, string[] content, CancellationToken cancellationToken)
     {
         var model = new OpenAiModel
         {
@@ -91,6 +91,6 @@ public class ChatClient
                 Role = "user"
             }).ToList()
         };
-        return await AskModel(model, completionApiUrl, token);
+        return await AskModel(model, completionApiUrl, token, cancellationToken);
     }
 }

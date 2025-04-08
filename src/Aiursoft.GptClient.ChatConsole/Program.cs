@@ -71,7 +71,7 @@ public abstract class Program
                 Content = nextQuestion
             });
 
-            var result = await chatClient.AskModel(history, endpoint, apiKey);
+            var result = await chatClient.AskModel(history, endpoint, apiKey, CancellationToken.None);
             Console.WriteLine("AI:");
             Console.WriteLine(result.GetAnswerPart());
 
