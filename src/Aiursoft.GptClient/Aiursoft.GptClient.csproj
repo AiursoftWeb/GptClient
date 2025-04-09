@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>9.0.23</Version>
+    <Version>9.0.24</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>Aiursoft.GptClient</AssemblyName>
     <RootNamespace>Aiursoft.GptClient</RootNamespace>
@@ -25,8 +25,8 @@
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="." />
     <PackageReference Include="Aiursoft.CSTools" Version="9.0.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aiursoft.GptClient.Abstractions\Aiursoft.GptClient.Abstractions.csproj" />
