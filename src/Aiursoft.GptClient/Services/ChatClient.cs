@@ -23,7 +23,7 @@ public class ChatClient
 
     public virtual Task<HttpResponseMessage> AskStream(OpenAiModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Asking LLM with model: {Model}， Endpoint: {Endpoint}.",
+        _logger.LogTrace("Asking LLM with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
             completionApiUrl);
 
@@ -59,7 +59,7 @@ public class ChatClient
             var responseModel = JsonSerializer.Deserialize<CompletionDataInternal>(responseJson);
             responseModel!.FillChoices();
 
-            _logger.LogInformation("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
+            _logger.LogTrace("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(1500),
                 responseModel.GetAnswerPart().SafeSubstring(1500),
                 stopwatch.ElapsedMilliseconds);
