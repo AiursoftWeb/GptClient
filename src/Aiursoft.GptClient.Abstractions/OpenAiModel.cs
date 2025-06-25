@@ -24,7 +24,8 @@ public class OpenAiModel
             Stream = Stream,
             Model = Model,
             Temperature = Temperature,
-            PresencePenalty = PresencePenalty
+            PresencePenalty = PresencePenalty,
+            Tools = Tools.ToList()
         };
     }
 }
