@@ -86,6 +86,13 @@ public class Tests
 
         var model = System.Text.Json.JsonSerializer.Deserialize<OpenAiModel>(json);
         Assert.IsNotNull(model);
+        Assert.AreEqual("qwen3:32b", model.Model);
+        Assert.IsTrue(model.Stream);
+        Assert.AreEqual(2, model.Tools.Count);
+        Assert.AreEqual("tool_get_current_time_post", model.Tools[0].Function!.Name);
+        Assert.AreEqual("tool_convert_time_post", model.Tools[1].Function!.Name);
+        Assert.AreEqual("Source Timezone", model.Tools[1].Function!.Parameters!.Properties["source_timezone"].Title);
+
     }
 
     [TestMethod]
