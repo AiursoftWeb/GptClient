@@ -14,6 +14,8 @@ public class OpenAiModel
 
     [JsonPropertyName("presence_penalty")] public int? PresencePenalty { get; set; } = 0;
 
+    [JsonPropertyName("tools")] public List<ToolsItem> Tools { get; set; } = [];
+
     public OpenAiModel Clone()
     {
         return new OpenAiModel
