@@ -1,18 +1,18 @@
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Abstractions;
 
 public class OpenAiRequestModel
 {
-    [JsonPropertyName("messages")] public List<MessagesItem> Messages { get; set; } = [];
+    [JsonProperty("messages")] public List<MessagesItem> Messages { get; set; } = [];
 
-    [JsonPropertyName("stream")] public bool? Stream { get; set; } = false;
+    [JsonProperty("stream")] public bool? Stream { get; set; } = false;
 
-    [JsonPropertyName("model")] public string? Model { get; set; } = string.Empty;
+    [JsonProperty("model")] public string? Model { get; set; } = string.Empty;
 
-    [JsonPropertyName("temperature")] public double? Temperature { get; set; } = 0.5;
+    [JsonProperty("temperature")] public double? Temperature { get; set; } = 0.5;
 
-    [JsonPropertyName("presence_penalty")] public int? PresencePenalty { get; set; } = 0;
+    [JsonProperty("presence_penalty")] public int? PresencePenalty { get; set; } = 0;
 
     public OpenAiRequestModel CloneAsOpenAiRequestModel()
     {
@@ -29,7 +29,7 @@ public class OpenAiRequestModel
 
 public class OllamaRequestModel : OpenAiRequestModel
 {
-    [JsonPropertyName("tools")] public List<ToolsItem> Tools { get; set; } = [];
+    [JsonProperty("tools")] public List<ToolsItem> Tools { get; set; } = [];
 
     public OllamaRequestModel CloneAsOllamaRequestModel()
     {
