@@ -1,12 +1,16 @@
-using System.Text.Json.Serialization;
+
+
+
+
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Abstractions;
 
 public class ParameterProperty
 {
-    [JsonPropertyName("type")] public string? Type { get; set; }
+    [JsonProperty("type")] public string? Type { get; set; }
 
-    [JsonPropertyName("title")] public string? Title { get; set; }
+    [JsonProperty("title")] public string? Title { get; set; }
 
-    [JsonPropertyName("description")] public string? Description { get; set; }
+    [JsonProperty("description")] public string? Description { get; set; }
 }

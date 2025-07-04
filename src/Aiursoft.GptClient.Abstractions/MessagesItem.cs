@@ -1,15 +1,17 @@
-using System.Text.Json.Serialization;
+
+
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Abstractions;
 
 public class MessagesItem
 {
-    [JsonPropertyName("role")] public string? Role { get; set; }
+    [JsonProperty("role")] public string? Role { get; set; }
 
-    [JsonPropertyName("content")] public string? Content { get; set; }
+    [JsonProperty("content")] public string? Content { get; set; }
 
     [JsonIgnore] public bool IsInjected { get; set; }
-    
+
     public MessagesItem Clone()
     {
         return new MessagesItem

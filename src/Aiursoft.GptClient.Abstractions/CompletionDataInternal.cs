@@ -1,4 +1,7 @@
-using System.Text.Json.Serialization;
+
+
+
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Abstractions;
 
@@ -7,31 +10,31 @@ public class CompletionData
     /// <summary>
     /// The ID of the completion.
     /// </summary>
-    [JsonPropertyName("id")]
+    [JsonProperty("id")]
     public string? Id { get; set; }
 
     /// <summary>
     /// The type of the object, which is always "text_completion".
     /// </summary>
-    [JsonPropertyName("object")]
+    [JsonProperty("object")]
     public string? Object { get; set; }
 
     /// <summary>
     /// The timestamp when the completion was created.
     /// </summary>
-    [JsonPropertyName("created")]
+    [JsonProperty("created")]
     public int? Created { get; set; }
 
     /// <summary>
     /// The name of the model used to generate the completion.
     /// </summary>
-    [JsonPropertyName("model")]
+    [JsonProperty("model")]
     public string? Model { get; set; }
 
     /// <summary>
     /// The usage data for this completion.
     /// </summary>
-    [JsonPropertyName("usage")]
+    [JsonProperty("usage")]
     public UsageData? Usage { get; set; }
 
     /// <summary>
@@ -39,7 +42,7 @@ public class CompletionData
     ///
     /// For library users: Do NOT access neither Choices nor Message directly. Use GetContent() and SetContent() instead.
     /// </summary>
-    [JsonPropertyName("choices")]
+    [JsonProperty("choices")]
     // ReSharper disable once CollectionNeverUpdated.Global
     // ReSharper disable once CollectionNeverQueried.Global
     public List<ChoicesItemData>? Choices { get; set; } = [];
@@ -111,7 +114,7 @@ public class CompletionDataInternal : CompletionData
     ///
     /// For library users: Do NOT access neither Choices nor Message directly. Use GetContent() and SetContent() instead.
     /// </summary>
-    [JsonPropertyName("message")]
+    [JsonProperty("message")]
     public MessageData? Message { get; set; }
 
     public void FillChoices()
