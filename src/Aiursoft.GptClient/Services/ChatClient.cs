@@ -21,7 +21,7 @@ public class ChatClient
         _logger = logger;
     }
 
-    public virtual Task<HttpResponseMessage> AskStream(OllamaRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
+    public virtual Task<HttpResponseMessage> AskStream(OpenAiRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
     {
         _logger.LogTrace("Asking LLM with model: {Model}， Endpoint: {Endpoint}.",
             model.Model,
@@ -42,7 +42,7 @@ public class ChatClient
         return response;
     }
 
-    public virtual async Task<CompletionData> AskModel(OllamaRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
+    public virtual async Task<CompletionData> AskModel(OpenAiRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken)
     {
         if (model.Stream == true)
         {
@@ -82,7 +82,7 @@ public class ChatClient
 
     public virtual async Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, string[] content, CancellationToken cancellationToken)
     {
-        var model = new OllamaRequestModel
+        var model = new OpenAiRequestModel
         {
             Model = modelType,
             Messages = content.Select(x => new MessagesItem
