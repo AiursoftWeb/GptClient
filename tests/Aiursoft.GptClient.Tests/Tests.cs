@@ -1,5 +1,6 @@
 using Aiursoft.GptClient.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Tests;
 
@@ -84,7 +85,7 @@ public class Tests
         }
         """;
 
-        var model = System.Text.Json.JsonSerializer.Deserialize<OllamaRequestModel>(json);
+        var model = JsonConvert.DeserializeObject<OllamaRequestModel>(json);
         Assert.IsNotNull(model);
         Assert.AreEqual("qwen3:32b", model.Model);
         Assert.IsTrue(model.Stream);
@@ -178,11 +179,7 @@ public class Tests
                 }
             ]
         };
-        var json = System.Text.Json.JsonSerializer.Serialize(model, new System.Text.Json.JsonSerializerOptions
-        {
-            WriteIndented = true,
-            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
-        });
+        var json = JsonConvert.SerializeObject(model);
         Assert.IsNotNull(json);
     }
 }

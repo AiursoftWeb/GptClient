@@ -1,9 +1,9 @@
 using System.Diagnostics;
 using System.Text;
-using System.Text.Json;
 using Aiursoft.CSTools.Tools;
 using Aiursoft.GptClient.Abstractions;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Services;
 
@@ -27,7 +27,7 @@ public class ChatClient
             model.Model,
             completionApiUrl);
 
-        var json = JsonSerializer.Serialize(model);
+        var json = JsonConvert.SerializeObject(model);
         var request = new HttpRequestMessage(HttpMethod.Post, completionApiUrl)
         {
             Content = new StringContent(json, Encoding.UTF8, "application/json")
@@ -56,7 +56,7 @@ public class ChatClient
         {
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
-            var responseModel = JsonSerializer.Deserialize<CompletionDataInternal>(responseJson);
+            var responseModel = JsonConvert.DeserializeObject<CompletionDataInternal>(responseJson);
             responseModel!.FillChoices();
 
             _logger.LogTrace("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
