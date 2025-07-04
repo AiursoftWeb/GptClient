@@ -43,16 +43,4 @@ public class OllamaRequestModel : OpenAiRequestModel
             Tools = Tools.ToList()
         };
     }
-
-    public OpenAiRequestModel CloneAsOpenAiRequestModel()
-    {
-        return new OpenAiRequestModel
-        {
-            Messages = Messages.Select(m => m.Clone()).ToList(),
-            Stream = Stream,
-            Model = Model,
-            Temperature = Temperature,
-            PresencePenalty = PresencePenalty
-        };
-    }
 }
