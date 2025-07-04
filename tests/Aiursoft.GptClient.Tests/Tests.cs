@@ -84,7 +84,7 @@ public class Tests
         }
         """;
 
-        var model = System.Text.Json.JsonSerializer.Deserialize<OpenAiModel>(json);
+        var model = System.Text.Json.JsonSerializer.Deserialize<OllamaRequestModel>(json);
         Assert.IsNotNull(model);
         Assert.AreEqual("qwen3:32b", model.Model);
         Assert.IsTrue(model.Stream);
@@ -98,7 +98,7 @@ public class Tests
     [TestMethod]
     public void TestSerialization()
     {
-        var model = new OpenAiModel
+        var model = new OllamaRequestModel
         {
             Model = "qwen3:32b",
             Messages =

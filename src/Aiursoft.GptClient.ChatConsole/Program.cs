@@ -58,7 +58,7 @@ public abstract class Program
         var serviceProvider = services.BuildServiceProvider();
         var chatClient = serviceProvider.GetRequiredService<ChatClient>();
 
-        var history = new OpenAiModel
+        var history = new OllamaRequestModel
         {
             Model = modelName
         };

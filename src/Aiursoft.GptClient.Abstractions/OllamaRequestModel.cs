@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace Aiursoft.GptClient.Abstractions;
 
-public class OpenAiModel
+public class OpenAiRequestModel
 {
     [JsonPropertyName("messages")] public List<MessagesItem> Messages { get; set; } = [];
 
@@ -14,11 +14,26 @@ public class OpenAiModel
 
     [JsonPropertyName("presence_penalty")] public int? PresencePenalty { get; set; } = 0;
 
+    public OpenAiRequestModel CloneAsOpenAiRequestModel()
+    {
+        return new OpenAiRequestModel
+        {
+            Messages = Messages.Select(m => m.Clone()).ToList(),
+            Stream = Stream,
+            Model = Model,
+            Temperature = Temperature,
+            PresencePenalty = PresencePenalty
+        };
+    }
+}
+
+public class OllamaRequestModel : OpenAiRequestModel
+{
     [JsonPropertyName("tools")] public List<ToolsItem> Tools { get; set; } = [];
 
-    public OpenAiModel Clone()
+    public OllamaRequestModel CloneAsOllamaRequestModel()
     {
-        return new OpenAiModel
+        return new OllamaRequestModel
         {
             Messages = Messages.Select(m => m.Clone()).ToList(),
             Stream = Stream,
@@ -26,6 +41,18 @@ public class OpenAiModel
             Temperature = Temperature,
             PresencePenalty = PresencePenalty,
             Tools = Tools.ToList()
+        };
+    }
+
+    public OpenAiRequestModel CloneAsOpenAiRequestModel()
+    {
+        return new OpenAiRequestModel
+        {
+            Messages = Messages.Select(m => m.Clone()).ToList(),
+            Stream = Stream,
+            Model = Model,
+            Temperature = Temperature,
+            PresencePenalty = PresencePenalty
         };
     }
 }
