@@ -36,39 +36,44 @@ Required IConfiguration keys:
 For example, you can use the following code to create a simple ChatGpt client:
 
 ```csharp
-var model = GptModel.DeepseekR170B;
-var services = new ServiceCollection();
-services.AddHttpClient();
-services.AddLogging(logging =>
-{
-    logging.SetMinimumLevel(LogLevel.Warning);
-});
-services.AddGptClient();
-var serviceProvider = services.BuildServiceProvider();
-var chatClient = serviceProvider.GetRequiredService<ChatClient>();
+using Aiursoft.GptClient;
+using Aiursoft.GptClient.Services;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-var history = new OpenAiModel
+namespace Test
 {
-    Model = modelName
-};
-while (true)
-{
-    var nextQuestion = AskUser("USER:", null);
-    history.Messages.Add(new MessagesItem
+    public abstract class Program
     {
-        Role = "user",
-        Content = nextQuestion
-    });
+        public static async Task Main()
+        {
+            // Keys
+            var apiKey = "";
+            var endpoint = "http://localhost:11434/api/chat";
+            var model = "qwen3:30b-a3b-thinking-2507-q8_0";
 
-    var result = await chatClient.AskModel(history, endpoint, apiKey);
-    Console.WriteLine("AI:");
-    Console.WriteLine(result.GetAnswerPart());
-    
-    history.Messages.Add(new MessagesItem
-    {
-        Role = "assistant",
-        Content = result.GetAnswerPart()
-    });
+            // Create a simple ChatGpt client.
+            var services = new ServiceCollection();
+            services.AddHttpClient();
+            services.AddLogging(logging => { logging.SetMinimumLevel(LogLevel.Warning); });
+            services.AddGptClient();
+            var serviceProvider = services.BuildServiceProvider();
+            var chatClient = serviceProvider.GetRequiredService<ChatClient>();
+            async Task<string> GetAnswer(string[] prompts)
+            {
+                return (await chatClient.AskString(
+                    modelType: model,
+                    completionApiUrl: endpoint,
+                    token: apiKey,
+                    content: prompts,
+                    CancellationToken.None)).GetAnswerPart();
+            }
+
+            // Example usage
+            var answer = await GetAnswer(["Why is the sky blue?"]);
+            Console.WriteLine(answer);
+        }
+    }
 }
 ```
 
