@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>9.0.20</Version>
+    <Version>9.0.21</Version>
     <TargetFramework>net9.0</TargetFramework>
     <AssemblyName>chat-console</AssemblyName>
     <RootNamespace>Aiursoft.GptClient.ChatConsole</RootNamespace>
@@ -31,8 +31,8 @@
     <ProjectReference Include="..\Aiursoft.GptClient\Aiursoft.GptClient.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.9" />
   </ItemGroup>
 </Project>
