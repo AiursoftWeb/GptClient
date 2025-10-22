@@ -82,9 +82,9 @@ public class Tests
 
         var model = JsonConvert.DeserializeObject<OllamaRequestModel>(json);
         Assert.IsNotNull(model);
-        Assert.AreEqual("qwen3:32b", model.Model);
+        Assert.AreEqual("qwen3:32b", model!.Model);
         Assert.IsTrue(model.Stream);
-        Assert.AreEqual(2, model.Tools.Count);
+        Assert.HasCount(2, model.Tools);
         Assert.AreEqual("tool_get_current_time_post", model.Tools[0].Function!.Name);
         Assert.AreEqual("tool_convert_time_post", model.Tools[1].Function!.Name);
         Assert.AreEqual("Source Timezone", model.Tools[1].Function!.Parameters!.Properties["source_timezone"].Title);
