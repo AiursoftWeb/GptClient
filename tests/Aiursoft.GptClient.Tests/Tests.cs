@@ -1,18 +1,13 @@
 using Aiursoft.GptClient.Abstractions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+
+[assembly: DoNotParallelize]
 
 namespace Aiursoft.GptClient.Tests;
 
 [TestClass]
 public class Tests
 {
-    [TestMethod]
-    public void Test1()
-    {
-        Assert.IsTrue(true);
-    }
-
     [TestMethod]
     public void TestDeserialization()
     {
