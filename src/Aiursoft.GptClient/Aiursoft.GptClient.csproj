@@ -17,9 +17,9 @@
     <PackageId>Aiursoft.GptClient</PackageId>
     <PackageTags>dependencies injection gptClient</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/gptClient</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.com/aiursoft/gptClient</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/gptClient</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.com/aiursoft/gptClient</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>

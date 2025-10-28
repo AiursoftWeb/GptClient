@@ -19,9 +19,9 @@
     <PackageId>Aiursoft.GptClient.ChatConsole</PackageId>
     <PackageTags>cli nuget dotnet csproj http static</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.cn/aiursoft/gptclient</PackageProjectUrl>
+    <PackageProjectUrl>https://gitlab.aiursoft.com/aiursoft/gptclient</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.cn/aiursoft/gptclient</RepositoryUrl>
+    <RepositoryUrl>https://gitlab.aiursoft.com/aiursoft/gptclient</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
