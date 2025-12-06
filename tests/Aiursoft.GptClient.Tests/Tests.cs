@@ -82,7 +82,7 @@ public class Tests
 
         var model = JsonConvert.DeserializeObject<OllamaRequestModel>(json);
         Assert.IsNotNull(model);
-        Assert.AreEqual("qwen3:32b", model!.Model);
+        Assert.AreEqual("qwen3:32b", model.Model);
         Assert.IsTrue(model.Stream);
         Assert.HasCount(2, model.Tools);
         Assert.AreEqual("tool_get_current_time_post", model.Tools[0].Function!.Name);

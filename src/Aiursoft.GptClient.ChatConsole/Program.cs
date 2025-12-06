@@ -71,6 +71,12 @@ public abstract class Program
                 Content = nextQuestion
             });
 
+            if (nextQuestion.Equals("exit", StringComparison.OrdinalIgnoreCase) ||
+                nextQuestion.Equals("quit", StringComparison.OrdinalIgnoreCase))
+            {
+                break;
+            }
+
             var result = await chatClient.AskModel(history, endpoint, apiKey, CancellationToken.None);
             Console.WriteLine("AI:");
             Console.WriteLine(result.GetAnswerPart());
@@ -82,6 +88,6 @@ public abstract class Program
             });
         }
 
-        // ReSharper disable once FunctionNeverReturns
+
     }
 }
