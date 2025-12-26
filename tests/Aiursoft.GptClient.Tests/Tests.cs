@@ -177,4 +177,25 @@ public class Tests
         var json = JsonConvert.SerializeObject(model);
         Assert.IsNotNull(json);
     }
+
+    [TestMethod]
+    public void TestResponseFormat()
+    {
+        var model = new OpenAiRequestModel
+        {
+            Model = "deepseek-chat",
+            ResponseFormat = new ResponseFormat
+            {
+                Type = "json_object"
+            }
+        };
+
+        var json = JsonConvert.SerializeObject(model);
+        Assert.Contains("\"response_format\":{\"type\":\"json_object\"}", json);
+
+        var deserialized = JsonConvert.DeserializeObject<OpenAiRequestModel>(json);
+        Assert.IsNotNull(deserialized);
+        Assert.IsNotNull(deserialized.ResponseFormat);
+        Assert.AreEqual("json_object", deserialized.ResponseFormat.Type);
+    }
 }
