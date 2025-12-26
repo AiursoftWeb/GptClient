@@ -14,6 +14,8 @@ public class OpenAiRequestModel
 
     [JsonProperty("presence_penalty")] public int? PresencePenalty { get; set; } = 0;
 
+    [JsonProperty("response_format")] public ResponseFormat? ResponseFormat { get; set; }
+
     public OpenAiRequestModel CloneAsOpenAiRequestModel()
     {
         return new OpenAiRequestModel
@@ -22,7 +24,8 @@ public class OpenAiRequestModel
             Stream = Stream,
             Model = Model,
             Temperature = Temperature,
-            PresencePenalty = PresencePenalty
+            PresencePenalty = PresencePenalty,
+            ResponseFormat = ResponseFormat?.Clone()
         };
     }
 }
@@ -40,7 +43,8 @@ public class OllamaRequestModel : OpenAiRequestModel
             Model = Model,
             Temperature = Temperature,
             PresencePenalty = PresencePenalty,
-            Tools = Tools.ToList()
+            Tools = Tools.ToList(),
+            ResponseFormat = ResponseFormat?.Clone()
         };
     }
 }
