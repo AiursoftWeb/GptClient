@@ -50,7 +50,7 @@ namespace Test
             // Keys
             var apiKey = "";
             var endpoint = "http://localhost:11434/api/chat";
-            var model = "qwen3:30b-a3b-thinking-2507-q8_0";
+            var model = "qwen3:32b-q8_0";
 
             // Create a simple ChatGpt client.
             var services = new ServiceCollection();
