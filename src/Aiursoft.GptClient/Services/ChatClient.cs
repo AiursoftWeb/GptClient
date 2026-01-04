@@ -56,8 +56,23 @@ public class ChatClient
         {
             response.EnsureSuccessStatusCode();
             var responseJson = await response.Content.ReadAsStringAsync(cancellationToken);
+            
+            _logger.LogTrace("Received raw JSON response: {ResponseJson}", responseJson.SafeSubstring(5000));
+            
             var responseModel = JsonConvert.DeserializeObject<CompletionDataInternal>(responseJson);
-            responseModel!.FillChoices();
+            
+            try
+            {
+                responseModel!.FillChoices();
+            }
+            catch (InvalidOperationException ex) when (ex.Message.Contains("Both Choices and Message are empty"))
+            {
+                _logger.LogError("Failed to parse LLM response. Both Choices and Message are empty. " +
+                    "Request last question: {Question}. Raw response: {RawResponse}",
+                    model.Messages.LastOrDefault()?.Content?.SafeSubstring(2000),
+                    responseJson.SafeSubstring(5000));
+                throw;
+            }
 
             _logger.LogTrace("Asked LLM. Request last question: {0}. Response last answer: {1}. Cost: {2}ms.",
                 model.Messages.LastOrDefault()?.Content?.SafeSubstring(1500),
