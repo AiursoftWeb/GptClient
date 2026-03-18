@@ -72,9 +72,9 @@ public class OllamaRequestModel : OpenAiRequestModel
 {
     [JsonProperty("tools")] public List<ToolsItem> Tools { get; set; } = [];
     
-    [JsonProperty("thinking")] public bool? Thinking { get; set; }
-    
     [JsonProperty("options")] public OllamaRequestOptions? Options { get; set; }
+
+    [JsonProperty("think")] public bool? Think { get; set; }
 
     public OllamaRequestModel CloneAsOllamaRequestModel()
     {
@@ -87,8 +87,8 @@ public class OllamaRequestModel : OpenAiRequestModel
             PresencePenalty = PresencePenalty,
             Tools = Tools.ToList(),
             ResponseFormat = ResponseFormat?.Clone(),
-            Thinking = Thinking,
-            Options = Options?.Clone()
+            Options = Options?.Clone(),
+            Think = Think
         };
     }
 }
