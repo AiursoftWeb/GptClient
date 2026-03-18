@@ -10,6 +10,8 @@ public class MessagesItem
 
     [JsonProperty("content")] public string? Content { get; set; }
 
+    [JsonProperty("images")] public List<string>? Images { get; set; }
+
     [JsonIgnore] public bool IsInjected { get; set; }
 
     public MessagesItem Clone()
@@ -18,6 +20,7 @@ public class MessagesItem
         {
             Role = Role,
             Content = Content,
+            Images = Images?.ToList(),
             IsInjected = IsInjected
         };
     }

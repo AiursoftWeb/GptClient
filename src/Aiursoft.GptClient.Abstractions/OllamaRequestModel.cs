@@ -30,9 +30,51 @@ public class OpenAiRequestModel
     }
 }
 
+public class OllamaRequestOptions
+{
+    [JsonProperty("num_ctx")]
+    public int? NumCtx { get; set; }
+
+    [JsonProperty("temperature")]
+    public float? Temperature { get; set; }
+
+    [JsonProperty("top_p")]
+    public float? TopP { get; set; }
+
+    [JsonProperty("top_k")]
+    public int? TopK { get; set; }
+    
+    [JsonProperty("num_predict")]
+    public int? NumPredict { get; set; }
+    
+    [JsonProperty("repeat_penalty")]
+    public float? RepeatPenalty { get; set; }
+    
+    [JsonProperty("stop")]
+    public string[]? Stop { get; set; }
+
+    public OllamaRequestOptions Clone()
+    {
+        return new OllamaRequestOptions
+        {
+            NumCtx = NumCtx,
+            Temperature = Temperature,
+            TopP = TopP,
+            TopK = TopK,
+            NumPredict = NumPredict,
+            RepeatPenalty = RepeatPenalty,
+            Stop = Stop?.ToArray()
+        };
+    }
+}
+
 public class OllamaRequestModel : OpenAiRequestModel
 {
     [JsonProperty("tools")] public List<ToolsItem> Tools { get; set; } = [];
+    
+    [JsonProperty("thinking")] public bool? Thinking { get; set; }
+    
+    [JsonProperty("options")] public OllamaRequestOptions? Options { get; set; }
 
     public OllamaRequestModel CloneAsOllamaRequestModel()
     {
@@ -44,7 +86,9 @@ public class OllamaRequestModel : OpenAiRequestModel
             Temperature = Temperature,
             PresencePenalty = PresencePenalty,
             Tools = Tools.ToList(),
-            ResponseFormat = ResponseFormat?.Clone()
+            ResponseFormat = ResponseFormat?.Clone(),
+            Thinking = Thinking,
+            Options = Options?.Clone()
         };
     }
 }

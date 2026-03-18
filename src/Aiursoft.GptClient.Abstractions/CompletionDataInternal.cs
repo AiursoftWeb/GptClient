@@ -117,6 +117,30 @@ public class CompletionDataInternal : CompletionData
     [JsonProperty("message")]
     public MessageData? Message { get; set; }
 
+    [JsonProperty("done")]
+    public bool Done { get; set; }
+
+    [JsonProperty("done_reason")]
+    public string? DoneReason { get; set; }
+
+    [JsonProperty("total_duration")]
+    public long? TotalDuration { get; set; }
+
+    [JsonProperty("load_duration")]
+    public long? LoadDuration { get; set; }
+
+    [JsonProperty("prompt_eval_count")]
+    public int? PromptEvalCount { get; set; }
+
+    [JsonProperty("prompt_eval_duration")]
+    public long? PromptEvalDuration { get; set; }
+
+    [JsonProperty("eval_count")]
+    public int? EvalCount { get; set; }
+
+    [JsonProperty("eval_duration")]
+    public long? EvalDuration { get; set; }
+
     public void FillChoices()
     {
         if ((Choices == null || Choices.Count == 0 || string.IsNullOrEmpty(Choices.First().Message?.Content)) && Message?.Content != null)
