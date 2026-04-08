@@ -108,4 +108,68 @@ public class ChatClient
         };
         return await AskModel(model, completionApiUrl, token, cancellationToken);
     }
+
+    public virtual async IAsyncEnumerable<string> AskStringStream(string modelType, string completionApiUrl, string? token, string[] content, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var model = new OpenAiRequestModel
+        {
+            Model = modelType,
+            Stream = true,
+            Messages = content.Select(x => new MessagesItem
+            {
+                Content = x,
+                Role = "user"
+            }).ToList()
+        };
+
+        await foreach (var chunk in AskModelStream(model, completionApiUrl, token, cancellationToken))
+        {
+            yield return chunk;
+        }
+    }
+
+    public virtual async IAsyncEnumerable<string> AskModelStream(OpenAiRequestModel model, string completionApiUrl, string? token, [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        if (model.Stream != true)
+        {
+            model = model.CloneAsOpenAiRequestModel();
+            model.Stream = true;
+        }
+
+        var response = await AskStream(model, completionApiUrl, token, cancellationToken);
+        response.EnsureSuccessStatusCode();
+
+        using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        using var reader = new StreamReader(stream);
+
+        while (true)
+        {
+            var line = await reader.ReadLineAsync(cancellationToken);
+            if (line == null)
+            {
+                break;
+            }
+
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                continue;
+            }
+
+            if (line.StartsWith("data: "))
+            {
+                var data = line.Substring(6).Trim();
+                if (data == "[DONE]")
+                {
+                    break;
+                }
+
+                var chunk = JsonConvert.DeserializeObject<CompletionDataInternal>(data);
+                var content = chunk?.Choices?.FirstOrDefault()?.Delta?.Content;
+                if (!string.IsNullOrEmpty(content))
+                {
+                    yield return content;
+                }
+            }
+        }
+    }
 }

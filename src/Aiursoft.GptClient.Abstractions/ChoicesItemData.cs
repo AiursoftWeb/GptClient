@@ -13,6 +13,12 @@ public class ChoicesItemData
     public MessageData? Message { get; set; }
 
     /// <summary>
+    /// The delta data for this choice (for streaming).
+    /// </summary>
+    [JsonProperty("delta")]
+    public MessageData? Delta { get; set; }
+
+    /// <summary>
     /// The reason why this choice was selected as the final choice.
     /// </summary>
     [JsonProperty("finish_reason")]
