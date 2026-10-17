@@ -1,8 +1,7 @@
 using System.Text;
 using Aiursoft.GptClient.Abstractions;
 using Aiursoft.GptClient.Services;
-using Microsoft.Extensions.Logging;
-using Moq;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 
 namespace Aiursoft.GptClient.Tests;
@@ -47,8 +46,7 @@ public class StreamingTests
         var chunks = new[] { "Hello", " ", "world", "!" };
         var handler = new MockHttpMessageHandler(chunks);
         var httpClient = new HttpClient(handler);
-        var loggerMock = new Mock<ILogger<ChatClient>>();
-        var client = new ChatClient(httpClient, loggerMock.Object);
+        var client = new ChatClient(httpClient, NullLogger<ChatClient>.Instance);
 
         var model = new OpenAiRequestModel
         {
