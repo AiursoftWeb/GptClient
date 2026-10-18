@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <Version>10.0.24</Version>
+    <Version>10.0.25</Version>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Aiursoft.GptClient</AssemblyName>
     <RootNamespace>Aiursoft.GptClient</RootNamespace>
@@ -17,9 +17,9 @@
     <PackageId>Aiursoft.GptClient</PackageId>
     <PackageTags>dependencies injection gptClient</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.com/aiursoft/gptClient</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/gptclient</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.com/aiursoft/gptClient</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/gptclient</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
