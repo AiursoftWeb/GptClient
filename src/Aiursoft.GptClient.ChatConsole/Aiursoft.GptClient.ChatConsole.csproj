@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <Version>10.0.20</Version>
+    <Version>10.0.21</Version>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>chat-console</AssemblyName>
     <RootNamespace>Aiursoft.GptClient.ChatConsole</RootNamespace>
@@ -19,9 +19,9 @@
     <PackageId>Aiursoft.GptClient.ChatConsole</PackageId>
     <PackageTags>cli nuget dotnet csproj http static</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://gitlab.aiursoft.com/aiursoft/gptclient</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AiursoftWeb/gptclient</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://gitlab.aiursoft.com/aiursoft/gptclient</RepositoryUrl>
+    <RepositoryUrl>https://github.com/AiursoftWeb/gptclient</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
