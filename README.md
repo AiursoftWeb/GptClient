@@ -1,5 +1,7 @@
 # Aiursoft GptClient
 
+<a name="aiursoft-gptclient"></a>
+
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/AiursoftWeb/gptclient/blob/master/LICENSE)
 [![Pipeline stat](https://badge-proxy.aiursoft.com/aiursoft/gptClient/badges/master/pipeline.svg)](https://gitlab.aiursoft.com/aiursoft/gptClient/-/pipelines)
 [![Test Coverage](https://badge-proxy.aiursoft.com/aiursoft/gptClient/badges/master/coverage.svg)](https://gitlab.aiursoft.com/aiursoft/gptClient/-/pipelines)
@@ -10,7 +12,17 @@
 
 The SDK for ChatGpt. Simple implementation and easy to use.
 
-## How to install
+## Overview
+
+### What is GptClient?
+
+A .NET HTTP client for model servers, with typed requests, streaming and non-streaming responses, and per-request endpoint configuration.
+
+## Installation
+
+Add the package to your .NET project:
+
+<a name="how-to-install"></a>
 
 First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 
@@ -18,23 +30,19 @@ First, install `Aiursoft.GptClient` to your ASP.NET Core project from nuget.org:
 dotnet add package Aiursoft.GptClient
 ```
 
-Exposed API in `ChatClient`:
+**Standalone console example**
 
-```csharp
-public Task<CompletionData> AskModel(OpenAiModel model);
-public Task<CompletionData> AskString(string gptModelType, params string[] content);
+The console example also uses the standard Microsoft service registrations:
+
+```bash
+dotnet add package Microsoft.Extensions.Http
 ```
 
-Required IConfiguration keys:
+Requires .NET 10 or later.
 
-```json
-{
-    "OpenAI:Token": "YourOpenAIKey",
-    "OpenAI:CompletionApiUrl": "https://api.openai.com/v1/engines/davinci/completions"
-}
-```
+## Usage
 
-For example, you can use the following code to create a simple ChatGpt client:
+Configure an accessible model server before running this complete console example:
 
 ```csharp
 using Aiursoft.GptClient;
@@ -58,7 +66,7 @@ namespace Test
             services.AddHttpClient();
             services.AddLogging(logging => { logging.SetMinimumLevel(LogLevel.Warning); });
             services.AddGptClient();
-            var serviceProvider = services.BuildServiceProvider();
+            using var serviceProvider = services.BuildServiceProvider();
             var chatClient = serviceProvider.GetRequiredService<ChatClient>();
             async Task<string> GetAnswer(string[] prompts)
             {
@@ -67,7 +75,7 @@ namespace Test
                     completionApiUrl: endpoint,
                     token: apiKey,
                     content: prompts,
-                    CancellationToken.None)).GetAnswerPart();
+                    cancellationToken: CancellationToken.None)).GetAnswerPart();
             }
 
             // Example usage
@@ -80,10 +88,56 @@ namespace Test
 
 Now you have built a simple ChatGpt client.
 
+### API reference
+
+Exposed API in `ChatClient`:
+
+```csharp
+public Task<CompletionData> AskModel(OpenAiRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken);
+public Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, string[] content, CancellationToken cancellationToken);
+```
+
+## Configuration
+
+**Endpoint, model and token**
+
+Pass `modelType`, `completionApiUrl`, `token`, prompt content and a cancellation token explicitly, as in the Usage example. `ChatClient` does not read `IConfiguration` keys automatically. A null token omits the Authorization header; a non-null value is sent as a Bearer token. Choose an endpoint and request/response format supported by the deployed model server.
+
+The consuming application may keep its own settings in this shape and pass the values to the client:
+
+```json
+{
+    "OpenAI:Token": "YourOpenAIKey",
+    "OpenAI:CompletionApiUrl": "http://localhost:11434/api/chat"
+}
+```
+
+These are application-owned keys, not required library settings. The local-server example uses the endpoint and model shown in Usage. `ChatClient` sets its HTTP timeout to five minutes; cancellation is also passed per request.
+
+## Development
+
+Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0).
+
+From the repository root, restore, build and test:
+
+```bash
+dotnet restore Aiursoft.GptClient.sln
+dotnet build Aiursoft.GptClient.sln --no-restore
+dotnet test Aiursoft.GptClient.sln --no-restore
+```
+
+Run `./lint.sh` for the existing static checks.
+
 ## How to contribute
+
+<a name="how-to-contribute"></a>
 
 There are many ways to contribute to the project: logging bugs, submitting pull requests, reporting issues, and creating suggestions.
 
-Even if you with push rights on the repository, you should create a personal fork and create feature branches there when you need them. This keeps the main repository clean and your workflow cruft out of sight.
+Even if you have push rights on the repository, you should create a personal fork and create feature branches there when you need them. This keeps the main repository clean and your workflow cruft out of sight.
 
 We're also interested in your feedback on the future of this project. You can submit a suggestion or feature request through the issue tracker. To make this process more effective, we're asking that these include more information to help define them more clearly.
+
+## License
+
+Licensed under the [MIT License](https://github.com/AiursoftWeb/gptclient/blob/master/LICENSE).
