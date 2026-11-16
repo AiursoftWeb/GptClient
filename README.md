@@ -38,6 +38,21 @@ The console example also uses the standard Microsoft service registrations:
 dotnet add package Microsoft.Extensions.Http
 ```
 
+**Optional chat console**
+
+The separately published interactive console is a .NET Global Tool:
+
+```bash
+dotnet tool install --global Aiursoft.GptClient.ChatConsole
+```
+
+Update or remove it with:
+
+```bash
+dotnet tool update --global Aiursoft.GptClient.ChatConsole
+dotnet tool uninstall --global Aiursoft.GptClient.ChatConsole
+```
+
 Requires .NET 10 or later.
 
 ## Usage
@@ -96,6 +111,16 @@ Exposed API in `ChatClient`:
 public Task<CompletionData> AskModel(OpenAiRequestModel model, string completionApiUrl, string? token, CancellationToken cancellationToken);
 public Task<CompletionData> AskString(string modelType, string completionApiUrl, string? token, string[] content, CancellationToken cancellationToken);
 ```
+
+### Chat console
+
+Run the installed console:
+
+```bash
+chat-console
+```
+
+It prompts for the chat API endpoint, API key and model name, followed by your messages. The API key can be empty for a local server that does not require one. This console is interactive; it does not use CommandFramework help or command-line configuration flags.
 
 ## Configuration
 
